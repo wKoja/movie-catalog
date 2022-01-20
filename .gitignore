@@ -1,0 +1,4 @@
+/node_modules/
+alinea-test.db
+package-lock.json
+/coverage/
