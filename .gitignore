@@ -1,6 +1,5 @@
 /node_modules/
 alinea-test.db
-package-lock.json
 /coverage/
 Back-end_developer.pdf
 build_mock_db.py
