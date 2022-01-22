@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("./app");
+const app = require("./index");
 
 describe("Testes API", () => {
   it("GET /movies --> retorna todos filmes", () => {
@@ -15,7 +15,7 @@ describe("Testes API", () => {
               nome_filme: expect.any(String),
               diretor: expect.any(String),
               genero: expect.any(String),
-              em_cartaz: expect.any(Boolean),
+              em_cartaz: expect.any(Number),
               data_lancamento: expect.any(String),
               imagem_url: expect.any(String),
             }),
