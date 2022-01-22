@@ -26,28 +26,33 @@ describe("Testes API", () => {
 
   it("GET /movies/id --> retorna filme por ID", () => {
     return request(app)
-      .get("/movies/10")
+      .get("/movies/1")
       .expect("Content-Type", /json/)
       .expect(200)
       .then((response) => {
         expect(response.body).toEqual(
           //TODO expects contendo informacoes de filme pre-definido na base
-          expect.objectContaining({
-            id: expect.any(Number),
-            nome_filme: expect.any(String),
-            diretor: expect.any(String),
-            genero: expect.any(String),
-            em_cartaz: expect.any(Boolean),
-            data_lancamento: expect.any(String),
-            imagem_url: expect.any(String),
-          })
+          expect.arrayContaining([
+            expect.objectContaining({
+              id: expect.any(Number),
+              nome_filme: expect.any(String),
+              diretor: expect.any(String),
+              genero: expect.any(String),
+              em_cartaz: expect.any(Number),
+              data_lancamento: expect.any(String),
+              imagem_url: expect.any(String),
+            }),
+          ])
         );
       });
   });
 
   it("GET /movies/id --> retorna 404 filme nao encontrado", () => {
     //TODO criar expect do body
-    return request(app).get("/movies/999999").expect(404);
+    return request(app)
+      .get("/movies/999999")
+      .expect(404)
+      .then(expect.objectContaining("Filme nao encontrado"));
   });
 
   it("POST /movies --> salva um filme no banco de dados", () => {

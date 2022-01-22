@@ -1,21 +1,30 @@
 const express = require("express");
 const router = express.Router();
-const sqlite3 = require("sqlite3");
+const movies = require("../services/movies");
 
-const db = new sqlite3.Database("../../alinea-test.db", (err) => {
-  if (err) {
-    console.error("Erro ao abrir base" + err.message);
+router.get("/", (req, res, next) => {
+  try {
+    res.status(200).send(movies.getAll());
+  } catch (err) {
+    console.error("Erro ao buscar filmes", err.message);
+    //usar res.status(400)?
+    next(err);
   }
 });
 
-router.get("/movies", (req, res, next) => {
-  db.all("SELECT * FROM FILMES", [], (err, rows) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
+router.get("/:id", (req, res, next) => {
+  var params = [req.params.id];
+  try {
+    data = movies.getById(params);
+    if (data.length == 0) {
+      res.status(404).send("Filme nao encontrado");
       return;
     }
-    res.status(200).json(rows);
-  });
+    res.status(200).send(movies.getById(params));
+  } catch (err) {
+    console.error("Erro ao buscar filme", err.message);
+    next(err);
+  }
 });
 
 module.exports = router;

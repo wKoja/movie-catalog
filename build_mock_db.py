@@ -40,7 +40,7 @@ conn = sqlite3.connect(path)
 c = conn.cursor()
 
 c.execute('''CREATE TABLE FILMES
-       ([id] integer, [nome_filme] text, [diretor] text,
+       ([id] integer primary key autoincrement not null, [nome_filme] text, [diretor] text,
        [genero] text, [em_cartaz] integer, [data_lancamento] text, [imagem_url] text)
        ''')
 

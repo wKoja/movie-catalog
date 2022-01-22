@@ -5,16 +5,17 @@
   "main": "./js/index.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack src/app.js -o public/bundle.js"
+    "build": "webpack src/app.js -o public/bundle.js",
+    "start": "node ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "better-sqlite3": "^7.5.0",
     "express": "^4.17.2",
     "jest": "^27.4.7",
     "morgan": "^1.10.0",
-    "sqlite3": "^5.0.2",
     "supertest": "^6.2.1",
     "webpack": "^5.66.0"
   }
