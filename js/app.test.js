@@ -59,10 +59,11 @@ describe("Testes API", () => {
     return request(app)
       .post("/movies")
       .send({
+        id: null,
         nome_filme: "Drive",
         diretor: "Nicolas Winding Refn",
         genero: "Action Drama",
-        em_cartaz: false,
+        em_cartaz: 0,
         data_lancamento: "20/05/2011",
         imagem_url: "url_teste",
       })
@@ -73,7 +74,7 @@ describe("Testes API", () => {
           nome_filme: "Drive",
           diretor: "Nicolas Winding Refn",
           genero: "Action Drama",
-          em_cartaz: false,
+          em_cartaz: 0,
           data_lancamento: "20/05/2011",
           imagem_url: "url_teste",
         })
@@ -87,7 +88,7 @@ describe("Testes API", () => {
         nome_filme: "Drive",
         diretor: "Nicolas Winding Refn",
         genero: "Noir",
-        em_cartaz: false,
+        em_cartaz: 0,
         data_lancamento: "20/05/2011",
         imagem_url: "url_teste",
       })

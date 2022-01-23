@@ -8,4 +8,8 @@ function query(sql, params) {
   return db.prepare(sql).all(params);
 }
 
-module.exports = { query };
+function run(sql, params) {
+  return db.prepare(sql).run(params);
+}
+
+module.exports = { query, run };
