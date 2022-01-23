@@ -2,19 +2,21 @@
   "name": "alinea-test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./js/start.js",
   "scripts": {
-    "test": "jest --watchAll",
-    "build": "webpack src/app.js -o public/bundle.js"
+    "test": "jest",
+    "start": "node .",
+    "build": "docker build . -t cfwilliamferreira/nodejs-test",
+    "docker-image": "docker run -p 49999:8080 -d cfwilliamferreira/nodejs-test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "better-sqlite3": "^7.5.0",
     "express": "^4.17.2",
     "jest": "^27.4.7",
     "morgan": "^1.10.0",
-    "supertest": "^6.2.1",
-    "webpack": "^5.66.0"
+    "supertest": "^6.2.1"
   }
 }
