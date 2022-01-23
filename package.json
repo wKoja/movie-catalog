@@ -2,7 +2,7 @@
   "name": "alinea-test",
   "version": "1.0.0",
   "description": "",
-  "main": "./js/index.js",
+  "main": "./js/start.js",
   "scripts": {
     "test": "jest",
     "build": "webpack src/app.js -o public/bundle.js",
