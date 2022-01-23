@@ -11,9 +11,8 @@ function getById(params) {
 }
 
 function create(movieObj) {
-  //TODO enviar movieObj direto
   const paramsArr = [
-    movieObj.id,
+    null,
     movieObj.nome_filme,
     movieObj.diretor,
     movieObj.genero,
@@ -27,12 +26,9 @@ function create(movieObj) {
     paramsArr
   );
 
-  //  const result = db.run(
-  //    "INSERT INTO FILMES (id, nome_filme, diretor, genero, em_cartaz, data_lancamento, imagem_url) VALUES (@id, @nome_filme, @diretor, @genero, @em_cartaz, @data_lancamento, @imagem_url)", paramsArr );
-  //
-  let message = "Erro ao inserir filme";
+  let message = { error: "Erro ao inserir filme" };
   if (result.changes) {
-    message = "Filme inserido com sucesso";
+    message = { message: "Filme inserido com sucesso" };
   }
   return message;
 }
