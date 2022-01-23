@@ -16,4 +16,3 @@ jobs:
       - run: python build_mock_db.py
       - run: npm ci
       - run: npm test
-      - run: npm run build

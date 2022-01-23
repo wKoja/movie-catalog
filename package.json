@@ -5,7 +5,6 @@
   "main": "./js/start.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack src/app.js -o public/bundle.js",
     "start": "node ."
   },
   "keywords": [],
@@ -16,7 +15,6 @@
     "express": "^4.17.2",
     "jest": "^27.4.7",
     "morgan": "^1.10.0",
-    "supertest": "^6.2.1",
-    "webpack": "^5.66.0"
+    "supertest": "^6.2.1"
   }
 }
