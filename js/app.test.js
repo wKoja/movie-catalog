@@ -81,9 +81,9 @@ describe("Testes API", () => {
       );
   });
 
-  it("PUT /movies/id --> altera um filme no banco de dados", () => {
+  it("PATCH /movies/id --> altera um filme no banco de dados", () => {
     return request(app)
-      .put("/movies/10")
+      .patch("/movies/10")
       .send({
         nome_filme: "Drive",
         diretor: "Nicolas Winding Refn",
@@ -92,7 +92,7 @@ describe("Testes API", () => {
         data_lancamento: "20/05/2011",
         imagem_url: "url_teste",
       })
-      .expect(201)
+      .expect(200)
       .then(
         expect.objectContaining({
           id: 10,
