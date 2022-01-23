@@ -5,7 +5,9 @@
   "main": "./js/start.js",
   "scripts": {
     "test": "jest",
-    "start": "node ."
+    "start": "node .",
+    "build": "docker build . -t cfwilliamferreira/nodejs-test",
+    "docker-image": "docker run -p 49999:8080 -d cfwilliamferreira/nodejs-test"
   },
   "keywords": [],
   "author": "",
