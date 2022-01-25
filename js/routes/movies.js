@@ -19,7 +19,7 @@ router.get("/:id", (req, res, next) => {
   try {
     data = movies.getById(params);
     if (data.length == 0) {
-      res.status(404).send("Filme nao encontrado");
+      res.status(404).send({ error: "Filme nao encontrado" });
       return;
     }
     res.status(200).send(movies.getById(params));
@@ -57,6 +57,10 @@ router.patch("/:id", (req, res, next) => {
 router.delete("/:id", (req, res, next) => {
   var id = req.params.id;
   try {
+    var movie = movies.getById(id);
+    if (movie.length == 0) {
+      res.status(404).send({ error: "Filme não encontrado" });
+    }
     res.status(204).send(movies.deletaFilme(id));
   } catch (err) {
     console.error("Erro ao deletar filme", err.message);
