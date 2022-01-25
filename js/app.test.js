@@ -59,7 +59,6 @@ describe("Testes API", () => {
     return request(app)
       .post("/movies")
       .send({
-        id: null,
         nome_filme: "Drive",
         diretor: "Nicolas Winding Refn",
         genero: "Action Drama",
@@ -106,8 +105,28 @@ describe("Testes API", () => {
       );
   });
 
-  it("DELETE /movies/id --> deleta um filme por id", () => {
-    //TODO considerar usar flag de deletado e retornar 200 com response body
-    return request(app).delete("/movies/id").expect(204);
+  it("DELETE /movies/id --> deleta um filme por id", async () => {
+    //FIXME corrigir o teste pra torná-lo dinâmico
+    var movie = await request(app).post("/movies").send({
+      nome_filme: "Drive",
+      diretor: "Nicolas Winding Refn",
+      genero: "Action Drama",
+      em_cartaz: 0,
+      data_lancamento: "20/05/2011",
+      imagem_url: "url_teste",
+    });
+    uri = `/movies/${movie.body.idFilme}`;
+    return request(app).delete(uri).expect(204);
+  });
+
+  it("DELETE /movies/id --> tenta deletar filme não existente", () => {
+    return request(app)
+      .delete("/movies/999999")
+      .expect(404)
+      .then(
+        expect.objectContaining({
+          error: "Filme não encontrado",
+        })
+      );
   });
 });

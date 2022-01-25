@@ -27,8 +27,12 @@ function create(movieObj) {
 
   let message = { error: "Erro ao inserir filme" };
   if (result.changes) {
-    message = { message: "Filme inserido com sucesso" };
+    message = {
+      message: "Filme inserido com sucesso",
+      idFilme: result.lastInsertRowid,
+    };
   }
+  console.log(message);
   return message;
 }
 
@@ -49,8 +53,6 @@ function update(params) {
     id,
   ];
 
-  console.log(paramsArr);
-
   const result = db.run(
     "UPDATE FILMES SET nome_filme = ?, diretor = ?, genero = ?, em_cartaz = ?, data_lancamento = ?, imagem_url = ? WHERE id = ?",
     paramsArr
@@ -63,6 +65,7 @@ function update(params) {
 }
 
 function deletaFilme(movieId) {
+  console.log({ idDoFilmeDeletado: movieId });
   return db.run("DELETE FROM FILMES WHERE id = ?", movieId);
 }
 
