@@ -3,18 +3,21 @@ const router = express.Router();
 const movies = require("../services/movies");
 
 //retorna todos os filmes
-router.get("/", (req, res, next) => {
+router.get("/", (req, res) => {
   try {
+    let result = movies.getAll();
+    if (result.length == 0) {
+      res.status(404).send({ error: "Não há filmes no banco de dados" });
+      return;
+    }
     res.status(200).send(movies.getAll());
   } catch (err) {
-    console.error("Erro ao buscar filmes", err.message);
-    //usar res.status(400)?
-    next(err);
+    sendError(res, "Erro ao buscar filmes", err);
   }
 });
 
 //retorna filme por id
-router.get("/:id", (req, res, next) => {
+router.get("/:id", (req, res) => {
   var params = req.params.id;
   try {
     data = movies.getById(params);
@@ -24,37 +27,42 @@ router.get("/:id", (req, res, next) => {
     }
     res.status(200).send(movies.getById(params));
   } catch (err) {
-    console.error("Erro ao buscar filme", err.message);
-    next(err);
+    sendError(res, "Erro ao buscar filme", err);
   }
 });
 
 //adiciona um filme no banco de dados
-//TODO tratar erros
-router.post("/", (req, res, next) => {
+router.post("/", (req, res) => {
   var body = req.body;
   try {
-    res.status(201).send(movies.create(body));
+    let result = movies.create(body);
+    if (Object.keys(result).includes("error")) {
+      sendError(res, "Erro ao inserir filme", err);
+    }
+    res.status(201).send(result);
   } catch (err) {
-    console.error("Erro ao cadastrar filme", err.message);
-    next(err);
+      sendError(res, "Erro ao inserir filme", err);
   }
 });
 
 //atualiza um filme por ID
-router.patch("/:id", (req, res, next) => {
+router.patch("/:id", (req, res) => {
   var body = req.body;
   var id = req.params.id;
   const params = { body, id };
   try {
-    res.status(200).send(movies.update(params));
+    let result = movies.update(params);
+    if (Object.keys(result).includes("error")) {
+      res.status(404).send(result);
+    }
+    res.status(200).send(result);
   } catch (err) {
-    console.error("Erro ao atualizar filme", err.message);
-    next(err);
+    sendError(res, "Erro ao atualizar o filme", err);
   }
 });
 
-router.delete("/:id", (req, res, next) => {
+//deleta um filme por ID
+router.delete("/:id", (req, res) => {
   var id = req.params.id;
   try {
     var movie = movies.getById(id);
@@ -63,9 +71,13 @@ router.delete("/:id", (req, res, next) => {
     }
     res.status(204).send(movies.deletaFilme(id));
   } catch (err) {
-    console.error("Erro ao deletar filme", err.message);
-    next(err);
+    sendError(res, "Erro ao deletar filme", err);
   }
 });
+
+function sendError(res, message, err) {
+  res.status(500).send({ error: "Ocorreu um erro interno." });
+  console.error(message, err.message);
+}
 
 module.exports = router;

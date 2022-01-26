@@ -107,7 +107,7 @@ describe("Testes API", () => {
 
   it("DELETE /movies/id --> deleta um filme por id", async () => {
     //FIXME corrigir o teste pra torná-lo dinâmico
-    var movie = await request(app).post("/movies").send({
+    var response = await request(app).post("/movies").send({
       nome_filme: "Drive",
       diretor: "Nicolas Winding Refn",
       genero: "Action Drama",
@@ -115,7 +115,7 @@ describe("Testes API", () => {
       data_lancamento: "20/05/2011",
       imagem_url: "url_teste",
     });
-    uri = `/movies/${movie.body.idFilme}`;
+    uri = `/movies/${response.body.idFilme}`;
     return request(app).delete(uri).expect(204);
   });
 
