@@ -55,6 +55,9 @@ describe("Testes API", () => {
       .then(expect.objectContaining("Filme nao encontrado"));
   });
 
+  it("POST /movies --> request sem body retorna erro 400", () => {
+    return request(app).post("/movies").send({}).expect(400);
+  });
   it("POST /movies --> salva um filme no banco de dados", () => {
     return request(app)
       .post("/movies")

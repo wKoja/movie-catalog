@@ -1,3 +1,4 @@
+const { response } = require("express");
 const express = require("express");
 const router = express.Router();
 const movies = require("../services/movies");
@@ -34,6 +35,9 @@ router.get("/:id", (req, res) => {
 //adiciona um filme no banco de dados
 router.post("/", (req, res) => {
   var body = req.body;
+  if(Object.entries(body).length == 0){
+    res.status(400).send({error: "Deve ter body"})
+  }
   try {
     let result = movies.create(body);
     if (Object.keys(result).includes("error")) {
