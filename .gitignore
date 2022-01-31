@@ -3,3 +3,4 @@ alinea-test.db
 /coverage/
 Back-end_developer.pdf
 .vscode/
+.env

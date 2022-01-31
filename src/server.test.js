@@ -1,7 +1,10 @@
 const request = require("supertest");
-const app = require("./index");
+const app = require("./server");
 
 describe("Testes API", () => {
+  it("POST /login --> tenta logar, retorna erro de login (username necessario)", () => {
+    return request.app();
+  });
   it("GET /movies --> retorna todos filmes", () => {
     return request(app)
       .get("/movies")
