@@ -1,16 +1,16 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const moviesService = require("../services/moviesService");
+import * as moviesService from "../services/moviesService.js";
 
 //retorna todos os filmes
 router.get("/", (req, res) => {
   try {
     let result = moviesService.getAll();
-    if (result.length == 0) {
+    if (result.length === 0) {
       res.status(404).send({ error: "Não há filmes no banco de dados" });
       return;
     }
-    res.status(200).send(moviesService.getAll());
+    res.status(200).send(result);
   } catch (err) {
     sendError(res, "Erro ao buscar filmes", err);
   }
@@ -18,10 +18,10 @@ router.get("/", (req, res) => {
 
 //retorna filme por id
 router.get("/:id", (req, res) => {
-  var params = req.params.id;
+  let params = req.params.id;
   try {
-    data = moviesService.getById(params);
-    if (data.length == 0) {
+    let data = moviesService.getById(params);
+    if (data.length === 0) {
       res.status(404).send({ error: "Filme nao encontrado" });
       return;
     }
@@ -33,7 +33,7 @@ router.get("/:id", (req, res) => {
 
 //adiciona um filme no banco de dados
 router.post("/", (req, res) => {
-  var body = req.body;
+  let body = req.body;
   if (Object.entries(body).length == 0) {
     res.status(400).send({ error: "Deve ter body" });
   }
@@ -50,8 +50,8 @@ router.post("/", (req, res) => {
 
 //atualiza um filme por ID
 router.patch("/:id", (req, res) => {
-  var body = req.body;
-  var id = req.params.id;
+  let body = req.body;
+  let id = req.params.id;
   const params = { body, id };
   try {
     let result = moviesService.update(params);
@@ -66,9 +66,9 @@ router.patch("/:id", (req, res) => {
 
 //deleta um filme por ID
 router.delete("/:id", (req, res) => {
-  var id = req.params.id;
+  let id = req.params.id;
   try {
-    var movie = moviesService.getById(id);
+    let movie = moviesService.getById(id);
     if (movie.length == 0) {
       res.status(404).send({ error: "Filme não encontrado" });
     }
@@ -83,4 +83,4 @@ function sendError(res, message, err) {
   console.error(message, err.message);
 }
 
-module.exports = router;
+export default router;

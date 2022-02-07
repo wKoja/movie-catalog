@@ -2,9 +2,10 @@
   "name": "alinea-test",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "./src/start.js",
   "scripts": {
-    "test": "jest",
+    "test": "node --experimental-vm-modules ./node_modules/.bin/jest",
     "start": "node .",
     "devStart": "nodemon ./src/start.js",
     "build": "docker build . -t cfwilliamferreira/nodejs-test",

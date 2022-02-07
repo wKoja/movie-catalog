@@ -1,9 +1,11 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const loginService = require("../services/loginService");
+//import * as loginService from "../services/loginService";
 
 router.get("/", (req, res) => {
   res.render("loginView.ejs");
 });
 
-module.exports = router;
+router.post("/", (req, res) => {});
+
+export default router;

@@ -1,13 +1,14 @@
-const express = require("express");
-const app = express();
-const logger = require("morgan");
-const moviesRouter = require("./routes/moviesRoute");
-const loginRouter = require("./routes/loginRoute");
-const registerRouter = require("./routes/registerRoute");
-const path = require("path");
+import express from "express";
+import logger from "morgan";
+import path from "path";
+import moviesRouter from "./routes/moviesRoute.js";
+import loginRouter from "./routes/loginRoute.js";
+import registerRouter from "./routes/registerRoute.js";
+import config from "./config.js";
 
-//FIXME find a way to configure default paths
-app.set("views", path.join(__dirname, "./views"));
+const app = express();
+
+app.set("views", path.join(config.__dirname, "./views"));
 app.set("view-engine", "ejs");
 app.use(logger("dev"));
 app.use(express.json());
@@ -28,4 +29,4 @@ app.get("/test", (req, res) => {
   });
 });
 
-module.exports = app;
+export default app;

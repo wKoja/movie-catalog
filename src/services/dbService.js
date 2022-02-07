@@ -1,6 +1,7 @@
-const sqlite = require("better-sqlite3");
-const path = require("path");
-const db = new sqlite(path.resolve(__dirname, "../../alinea-test.db"), {
+import sqlite from "better-sqlite3";
+import path from "path";
+import config from "../config.js";
+const db = new sqlite(path.resolve(config.__dirname, "../alinea-test.db"), {
   fileMustExist: true,
 });
 
@@ -14,4 +15,4 @@ function run(sql, params) {
   return db.prepare(sql).run(params);
 }
 
-module.exports = { query, run };
+export { query, run };

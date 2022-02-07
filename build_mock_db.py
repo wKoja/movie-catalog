@@ -43,6 +43,9 @@ c.execute('''CREATE TABLE FILMES
        ([id] integer primary key autoincrement not null, [nome_filme] text, [diretor] text,
        [genero] text, [em_cartaz] integer, [data_lancamento] text, [imagem_url] text)
        ''')
+c.execute('''CREATE TABLE LOGIN
+        ([id] integer primary key autoincrement not null, [name] text, [username] text, [password] text)
+        ''')
 
 i = 0
 while i != len(arr_nest):
@@ -59,5 +62,6 @@ while i != len(arr_nest):
               ])
     conn.commit()
     i = i + 1
+
 
 conn.close()

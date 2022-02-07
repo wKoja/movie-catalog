@@ -1,12 +1,12 @@
-const request = require("supertest");
-const app = require("./server");
+import request from "supertest";
+import app from "./server";
 
 describe("Testes API", () => {
-  it("POST /login --> tenta logar, retorna erro de login (username necessario)", () => {
-    return request.app();
-  });
-  it("GET /movies --> retorna todos filmes", () => {
-    return request(app)
+  //  it("POST /login --> tenta logar, retorna erro de login (username necessario)", () => {
+  //    return request.app();
+  //  });
+  it("GET /movies --> retorna todos filmes", async () => {
+    return await request(app)
       .get("/movies")
       .expect("Content-Type", /json/)
       .expect(200)
@@ -27,8 +27,8 @@ describe("Testes API", () => {
       });
   });
 
-  it("GET /movies/id --> retorna filme por ID", () => {
-    return request(app)
+  it("GET /movies/id --> retorna filme por ID", async () => {
+    return await request(app)
       .get("/movies/1")
       .expect("Content-Type", /json/)
       .expect(200)
@@ -113,7 +113,7 @@ describe("Testes API", () => {
 
   it("DELETE /movies/id --> deleta um filme por id", async () => {
     //FIXME corrigir o teste pra torná-lo dinâmico
-    var response = await request(app).post("/movies").send({
+    let response = await request(app).post("/movies").send({
       nome_filme: "Drive",
       diretor: "Nicolas Winding Refn",
       genero: "Action Drama",
@@ -121,7 +121,7 @@ describe("Testes API", () => {
       data_lancamento: "20/05/2011",
       imagem_url: "url_teste",
     });
-    uri = `/movies/${response.body.idFilme}`;
+    let uri = `/movies/${response.body.idFilme}`;
     return request(app).delete(uri).expect(204);
   });
 

@@ -1,19 +1,11 @@
-const db = require("./dbService");
+import * as db from "./dbService.js";
 
 function getAll() {
-  try {
-    return db.query(`SELECT * FROM FILMES`, []);
-  } catch (err) {
-    return err;
-  }
+  return db.query(`SELECT * FROM FILMES`, []);
 }
 
 function getById(params) {
-  try {
-    return db.query(`SELECT * FROM FILMES WHERE id = ?`, params);
-  } catch (err) {
-    return err;
-  }
+  return db.query(`SELECT * FROM FILMES WHERE id = ?`, params);
 }
 
 function create(movieObj) {
@@ -27,28 +19,24 @@ function create(movieObj) {
     movieObj.imagem_url,
   ];
 
-  try {
-    const result = db.run(
-      "INSERT INTO FILMES (id, nome_filme, diretor, genero, em_cartaz, data_lancamento, imagem_url) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      paramsArr
-    );
+  const result = db.run(
+    "INSERT INTO FILMES (id, nome_filme, diretor, genero, em_cartaz, data_lancamento, imagem_url) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    paramsArr
+  );
 
-    let message = { error: "Erro ao inserir filme" };
-    if (result.changes) {
-      message = {
-        message: "Filme inserido com sucesso",
-        idFilme: result.lastInsertRowid,
-      };
-    }
-    return message;
-  } catch (err) {
-    return err;
+  let message = { error: "Erro ao inserir filme" };
+  if (result.changes) {
+    message = {
+      message: "Filme inserido com sucesso",
+      idFilme: result.lastInsertRowid,
+    };
   }
+  return message;
 }
 
 function update(params) {
-  var id = params.id;
-  moviePrev = getById(id)[0];
+  let id = params.id;
+  let moviePrev = getById(id)[0];
   /*usa spread operator pra substituir informacoes velhas (moviePrev)
 		com informacoes novas (params.body)
 	*/
@@ -63,33 +51,19 @@ function update(params) {
     id,
   ];
 
-  try {
-    const result = db.run(
-      "UPDATE FILMES SET nome_filme = ?, diretor = ?, genero = ?, em_cartaz = ?, data_lancamento = ?, imagem_url = ? WHERE id = ?",
-      paramsArr
-    );
-    let message = { error: "Filme não encontrado" };
-    if (result.changes) {
-      message = { message: "Filme atualizado com sucesso" };
-    }
-    return message;
-  } catch (err) {
-    return err;
+  const result = db.run(
+    "UPDATE FILMES SET nome_filme = ?, diretor = ?, genero = ?, em_cartaz = ?, data_lancamento = ?, imagem_url = ? WHERE id = ?",
+    paramsArr
+  );
+  let message = { error: "Filme não encontrado" };
+  if (result.changes) {
+    message = { message: "Filme atualizado com sucesso" };
   }
+  return message;
 }
 
 function deletaFilme(movieId) {
-  try {
-    return db.run("DELETE FROM FILMES WHERE id = ?", movieId);
-  } catch (err) {
-    return err;
-  }
+  return db.run("DELETE FROM FILMES WHERE id = ?", movieId);
 }
 
-module.exports = {
-  getAll,
-  getById,
-  create,
-  update,
-  deletaFilme,
-};
+export { getAll, getById, create, update, deletaFilme };
