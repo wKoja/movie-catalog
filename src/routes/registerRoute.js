@@ -1,12 +1,12 @@
 import express from "express";
-const router = express.Router();
 import * as registerService from "../services/registerService.js";
+const router = express.Router();
 
 router.get("/", (req, res) => {
   res.render("registerView.ejs");
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   try {
     let result = registerService.registerUser(req.body);
     res.status(201).send(result);

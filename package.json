@@ -7,7 +7,7 @@
   "scripts": {
     "test": "node --experimental-vm-modules ./node_modules/.bin/jest",
     "start": "node .",
-    "devStart": "nodemon ./src/start.js",
+    "devStart": "nodemon --inspect ./src/start.js",
     "build": "docker build . -t cfwilliamferreira/nodejs-test",
     "docker-image": "docker run -p 49999:8080 -d cfwilliamferreira/nodejs-test"
   },
