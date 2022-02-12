@@ -1,11 +1,26 @@
 import express from "express";
+import passport from "passport";
+import {
+  initializePassport,
+  checkAuthenticated,
+} from "../services/loginService.js";
 const router = express.Router();
-//import * as loginService from "../services/loginService";
 
-router.get("/", (req, res) => {
+initializePassport(passport);
+
+router.get("/", checkAuthenticated, (req, res) => {
   res.render("loginView.ejs");
 });
 
-router.post("/", (req, res) => {});
+//everything is handled by passport lib configured in the loginService.js
+router.post(
+  "/",
+  checkAuthenticated,
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true,
+  })
+);
 
 export default router;
